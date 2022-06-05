@@ -4,6 +4,13 @@
 #
 # USAGE:
 #
+# ./selfstock.sh <elo white> <elo black> <FEN position>
+#
+# All arguments required.
+#
+# WARNING:
+#
+# This program and all related materials provided AS-IS with no warranty explicit or implied.
 #
 # BACKGROUND:
 #
@@ -26,15 +33,30 @@
 #
 #
 #
-#default="7k/8/R5K1/8/8/8/8/8 b - - 0 1"
-default="rn1qk2r/pbppppbp/1p3np1/4P1B1/2PP4/2N2N2/PP2BPPP/R2QK2R w KQkq - 0 1"
+position="7k/8/R5K1/8/8/8/8/8 b - - 0 1"
+#default="rn1qk2r/pbppppbp/1p3np1/4P1B1/2PP4/2N2N2/PP2BPPP/R2QK2R w KQkq - 0 1"
 
 # Delete fifos from previous stopped invocations if any, create fifos 
 rm -f stock_w stock_b stock_x
 mkfifo stock_w stock_b stock_x
  
+if [ ! "$3" = "" ]; then
+  position=$3
+fi
 
-cat stock_x | ./glue.sh "$default" &
+function ctrl_c() {
+    echo "💔 ctrl-c received, killing background process engines, cleaning up fifos:"
+    for pid in ${pids[*]}; do
+	kill $pid
+    done
+    rm -f stock_w stock_b stock_x    
+}
+
+trap ctrl_c INT
+
+
+
+cat stock_x | ./glue.sh "$position" &
 pids[0]=$!
 cat stock_w | stockfish > stock_x &
 pids[1]=$!
