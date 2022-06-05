@@ -2,14 +2,17 @@
 
 A pure bash solution to play stockfish against itself using only the cli.
 
-``
+```
 ./selfstock.sh <elo white> <elo black> <FEN position>
 
 ```
 Will produce a game in pgn format, importable in any GUI including lichess.
 
+Example:
+
+```
 ./selfstock.sh 1800 2000 "rn1qk2r/pbppppbp/1p3np1/4P1B1/2PP4/2N2N2/PP2BPPP/R2QK2R w KQkq - 0 1"
-``
+```
 
 ## Background
 Although several chess programs offer the ability to make engines compete against each other, I had trouble finding a truly simple and scriptable way to get stockfish to play itself on a mac. 
