@@ -75,13 +75,18 @@ do
 	    push_game_to_fifo ${PLAYERS[$i]}
         else
 	    if [ $mate == 0 ]; then
+		echo " 1/2-1/2" >> gamesofar		
 		echo " 1/2-1/2"
 	    elif [ $i == 0 ]; then
-		printf " 1-0" >> gamesofar
+		echo " 1-0" >> gamesofar
 		echo " 1-0"
+		echo ""
+		echo ""
 	    else
-		printf " 0-1" >> gamesofar
+		echo " 0-1" >> gamesofar
 		echo " 0-1"
+		echo ""
+		echo ""
 	    fi
 	    exec 4>&-
 	    exec 5>&-	    

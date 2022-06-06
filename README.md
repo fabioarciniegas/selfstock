@@ -1,17 +1,38 @@
-# selfstock
+** This software and all related materials provided AS-IS with no warranty explicit or implied. **
+
+Familiarity with bash is highly recommended. Questions regarding running permissions etc. are not covered in this document.
+
+# selfstock.sh
+
 
 Quickly play stockfish against itself from the command line:
 
 ```
-./selfstock.sh <elo white> <elo black> <FEN position>
+./selfstock.sh <elo white> <elo black> <FEN position> [milliseconds per move]
 
 ```
 
-Produces a game in pgn format, importable in any analysis tool including lichess.
+# Why? / Can't I just turn the engine on in lichess?
 
-## WARNING:
 
-This program and all related materials provided AS-IS with no warranty explicit or implied.
+I wrote this with scriptable scenarios in mind such as generating many games from a given position, particularly in my mac where there are fewer tools.  I wanted a simple command line solution where I could easily do things like the following:
+
+
+I have this position on the Benko gambit which I am studying:
+
+It is solid but as it often happens when you are studying openings, i got to the point where there aren't many games in the databases.  What I would like to get is 100 games starting from this position: stockfish against a 1200 player, a 1210, a 1220 etc:
+
+```
+#!/bin/bash
+for i in {1200..2000..10}
+do
+	./selfstock.sh 3000 $i "r1bq1rk1/p3ppbp/1n1p1np1/2pP4/4P3/1P1B4/PB1NNPPP/R2Q1RK1 b - - 8 11" | pgn-extract >> games_benko.pgn
+done
+
+```
+
+
+
 
 ## Where to get a FEN position?
 
